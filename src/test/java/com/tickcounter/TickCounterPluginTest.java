@@ -1,4 +1,4 @@
-package com.tick-counter;
+package com.tickcounter;
 
 import net.runelite.client.RuneLite;
 import net.runelite.client.externalplugins.ExternalPluginManager;
