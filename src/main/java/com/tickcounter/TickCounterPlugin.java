@@ -100,6 +100,10 @@ public class TickCounterPlugin extends Plugin
 			case 423: // kick
 			case 386: // lunge
 			case 390: // generic slash
+				if (weapon == 24219) // swift blade
+				{
+					delta = 3;
+				}
 			case 1062: // dds spec
 			case 1067: // claw stab
 			case 1074: // msb spec
@@ -115,6 +119,11 @@ public class TickCounterPlugin extends Plugin
 			case 7515: // d sword spec
 			case 8145: // rapier stab
 			case 8288: // dhl stab
+				if (weapon == 24219) // swift blade
+				{
+					delta = 3;
+					break;
+				}
 			case 8289: // dhl slash
 			case 8290: // dhl crush
 				delta = 4;
