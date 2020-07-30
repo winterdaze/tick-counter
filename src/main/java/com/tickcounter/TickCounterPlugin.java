@@ -126,6 +126,7 @@ public class TickCounterPlugin extends Plugin
 				}
 			case 8289: // dhl slash
 			case 8290: // dhl crush
+			case 4503: // inquisitor's mace crush
 				delta = 4;
 				break;
 			case 393: // staff bash
@@ -136,6 +137,12 @@ public class TickCounterPlugin extends Plugin
 				}
 			case 395: // axe autos
 			case 400: // pick smash
+				if (weapon == 24417)
+				{
+					// inquisitor's mace stab
+					delta = 4;
+					break;
+				}
 			case 1379: //burst or blitz
 			case 1979: // barrage spell cast
 			case 1162: // strike/bolt spells
