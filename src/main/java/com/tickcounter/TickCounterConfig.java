@@ -5,7 +5,7 @@ import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
 
-import java.awt.*;
+import java.awt.Color;
 
 @ConfigGroup("tickcounter")
 public interface TickCounterConfig extends Config
@@ -25,7 +25,7 @@ public interface TickCounterConfig extends Config
 		keyName = "selfColor",
 		name = "Your color",
 		description = "",
-		position = 4
+		position = 3
 	)
 	default Color selfColor()
 	{
@@ -35,7 +35,7 @@ public interface TickCounterConfig extends Config
 		keyName = "totalEnabled",
 		name = "Show total ticks",
 		description = "",
-		position = 6
+		position = 5
 	)
 	default boolean totalEnabled()
 	{
@@ -46,7 +46,7 @@ public interface TickCounterConfig extends Config
 		keyName = "totalColor",
 		name = "Total color",
 		description = "",
-		position = 7
+		position = 6
 	)
 	default Color totalColor()
 	{
@@ -57,22 +57,11 @@ public interface TickCounterConfig extends Config
 		keyName = "otherColor",
 		name = "Other players color",
 		description = "",
-		position = 5
+		position = 4
 	)
 	default Color otherColor()
 	{
 		return Color.white;
-	}
-	@Alpha
-	@ConfigItem(
-		keyName = "bgColor",
-		name = "Background color",
-		description = "",
-		position = 3
-	)
-	default Color bgColor()
-	{
-		return new Color(70, 61, 50, 156);
 	}
 	@Alpha
 	@ConfigItem(

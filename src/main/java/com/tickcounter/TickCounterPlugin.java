@@ -2,9 +2,7 @@ package com.tickcounter;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.inject.Inject;
-
 import com.google.inject.Provides;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
@@ -32,6 +30,7 @@ public class TickCounterPlugin extends Plugin
 	private TickCounterConfig config;
 	@Inject
 	private Client client;
+
 	@Provides
 	TickCounterConfig provideConfig(ConfigManager configManager)
 	{
@@ -103,6 +102,7 @@ public class TickCounterPlugin extends Plugin
 				if (weapon == 24219) // swift blade
 				{
 					delta = 3;
+					break;
 				}
 			case 1062: // dds spec
 			case 1067: // claw stab
@@ -127,6 +127,7 @@ public class TickCounterPlugin extends Plugin
 			case 8289: // dhl slash
 			case 8290: // dhl crush
 			case 4503: // inquisitor's mace crush
+			case 1711: // zamorakian spear
 				delta = 4;
 				break;
 			case 393: // staff bash
@@ -143,11 +144,16 @@ public class TickCounterPlugin extends Plugin
 					delta = 4;
 					break;
 				}
-			case 1379: //burst or blitz
-			case 1979: // barrage spell cast
+			case 1379: // burst or blitz
 			case 1162: // strike/bolt spells
-			case 7552: // generic crossbow
 			case 7855: // surge spells
+				if (weapon == 24423) // harmonised staff
+				{
+					delta = 4;
+					break;
+				}
+			case 7552: // generic crossbow
+			case 1979: // barrage spell cast
 			case 8056: // scythe swing
 				delta = 5;
 				break;
@@ -227,4 +233,5 @@ public class TickCounterPlugin extends Plugin
 			blowpiping.clear();
 		}
 	}
+
 }

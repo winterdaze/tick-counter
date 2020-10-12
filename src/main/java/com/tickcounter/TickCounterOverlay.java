@@ -6,26 +6,22 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
-
 import javax.inject.Inject;
-
 import net.runelite.api.Client;
 import net.runelite.api.MenuAction;
-import net.runelite.client.ui.overlay.Overlay;
+import net.runelite.client.ui.overlay.OverlayPanel;
 import net.runelite.client.ui.overlay.OverlayPosition;
 import net.runelite.client.ui.overlay.OverlayMenuEntry;
 import net.runelite.client.ui.overlay.components.LayoutableRenderableEntity;
 import net.runelite.client.ui.overlay.components.LineComponent;
-import net.runelite.client.ui.overlay.components.PanelComponent;
 import net.runelite.client.ui.overlay.components.TitleComponent;
 
-public class TickCounterOverlay extends Overlay
+public class TickCounterOverlay extends OverlayPanel
 {
 
 	private TickCounterPlugin plugin;
 	private TickCounterConfig config;
 	private Client client;
-	private PanelComponent panelComponent = new PanelComponent();
 
 	@Inject
 	public TickCounterOverlay(TickCounterPlugin plugin,Client client,TickCounterConfig config)
@@ -45,8 +41,6 @@ public class TickCounterOverlay extends Overlay
 	{
 		List<LayoutableRenderableEntity> elems = panelComponent.getChildren();
 		elems.clear();
-		panelComponent.setBackgroundColor(config.bgColor());
-		elems.add(TitleComponent.builder().text("Tick counter").color(config.titleColor()).build());
 		List<Entry<String, Integer>> list = new ArrayList<>(plugin.activity.entrySet());
 		list.sort(new Comparator<Entry<String, Integer>>()
 		{
@@ -59,6 +53,7 @@ public class TickCounterOverlay extends Overlay
 				return value;
 			}
 		});
+		if (list.size() != 0) elems.add(TitleComponent.builder().text("Tick counter").color(config.titleColor()).build());
 		int total = 0;
 		for (Entry<String, Integer> e : list)
 		{
@@ -75,8 +70,8 @@ public class TickCounterOverlay extends Overlay
 		}
 		if (config.totalEnabled())
 		{
-			elems.add(LineComponent.builder().left("Total").leftColor(config.totalColor()).rightColor(config.totalColor()).right(String.valueOf(total)).build());
+			if (list.size() != 0) elems.add(LineComponent.builder().left("Total").leftColor(config.totalColor()).rightColor(config.totalColor()).right(String.valueOf(total)).build());
 		}
-		return this.panelComponent.render(g);
+		return super.render(g);
 	}
 }
