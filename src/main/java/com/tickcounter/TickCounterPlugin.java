@@ -128,8 +128,16 @@ public class TickCounterPlugin extends Plugin
 			case 8290: // dhl crush
 			case 4503: // inquisitor's mace crush
 			case 1711: // zamorakian spear
-				delta = 4;
-				break;
+				if (config.showZamorakianSpear())
+				{
+					delta = 4;
+					break;
+				}
+				else
+				{
+					delta = 0;
+					break;
+				}
 			case 393: // staff bash
 				if (weapon == 13652)
 				{ // claw scratch

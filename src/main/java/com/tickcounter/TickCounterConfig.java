@@ -74,4 +74,14 @@ public interface TickCounterConfig extends Config
 	{
 		return Color.white;
 	}
+	@ConfigItem(
+		keyName = "showZamorakianSpear",
+		name = "Include Zamorakian Spear",
+		description = "",
+		position = 7
+	)
+	default boolean showZamorakianSpear()
+	{
+		return true;
+	}
 }
