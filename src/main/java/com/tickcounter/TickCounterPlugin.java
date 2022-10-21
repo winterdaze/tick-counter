@@ -20,7 +20,7 @@ import net.runelite.client.ui.overlay.OverlayManager;
 
 @Slf4j
 @PluginDescriptor(
-	name = "Tick Counter"
+		name = "Tick Counter"
 )
 public class TickCounterPlugin extends Plugin
 {
@@ -89,7 +89,15 @@ public class TickCounterPlugin extends Plugin
 				break;
 			case 426: // bow shoot
 				if (weapon == 20997) // twisted bow
+				{
 					delta = 5;
+					break;
+				}
+				if (weapon == 25886 || weapon == 25867 || weapon == 25869 || weapon == 25884 || weapon == 25886 || weapon == 25888 || weapon == 25890 || weapon == 25892 || weapon == 25894 || weapon == 25896 || weapon == 25865) // Bowfa
+				{
+					delta = 4;
+					break;
+				}
 				else // shortbow
 					delta = 3;
 				break;
@@ -102,6 +110,11 @@ public class TickCounterPlugin extends Plugin
 				if (weapon == 24219) // swift blade
 				{
 					delta = 3;
+					break;
+				}
+				if (weapon == 26219) // Osmumten's Fang
+				{
+					delta = 5;
 					break;
 				}
 			case 1062: // dds spec
@@ -162,6 +175,10 @@ public class TickCounterPlugin extends Plugin
 				}
 			case 7552: // generic crossbow
 			case 1979: // barrage spell cast
+			case 8010: // Blisterwood Flail
+			case 6118: // Osmumten's Fang special
+			case 9471: // Fang stab
+			case 9493: // Tumeken's Shadow
 			case 8056: // scythe swing
 				delta = 5;
 				break;
@@ -234,8 +251,8 @@ public class TickCounterPlugin extends Plugin
 	public void onOverlayMenuClicked(OverlayMenuClicked event)
 	{
 		if (event.getEntry().getMenuAction() == MenuAction.RUNELITE_OVERLAY &&
-			event.getEntry().getTarget().equals("Tick counter") &&
-			event.getEntry().getOption().equals("Reset"))
+				event.getEntry().getTarget().equals("Tick counter") &&
+				event.getEntry().getOption().equals("Reset"))
 		{
 			activity.clear();
 			blowpiping.clear();
