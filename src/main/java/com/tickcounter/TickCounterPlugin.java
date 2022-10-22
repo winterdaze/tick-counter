@@ -20,7 +20,7 @@ import net.runelite.client.ui.overlay.OverlayManager;
 
 @Slf4j
 @PluginDescriptor(
-		name = "Tick Counter"
+		name = "PvM Tick Counter"
 )
 public class TickCounterPlugin extends Plugin
 {
