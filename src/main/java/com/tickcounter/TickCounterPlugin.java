@@ -89,7 +89,10 @@ public class TickCounterPlugin extends Plugin
 				break;
 			case 426: // bow shoot
 				if (weapon == 20997) // twisted bow
-					delta = 5;
+					delta = 5; 
+				else if (weapon == 25865 || weapon == 25867 || weapon == 25869 || weapon == 25884 || weapon == 25884 || weapon == 25886 || weapon == 25888 || weapon == 25890 || weapon == 25892 || weapon == 25894 || weapon == 25896)
+					// Bow of Faerdhinen
+					delta = 4;
 				else // shortbow
 					delta = 3;
 				break;
@@ -104,6 +107,12 @@ public class TickCounterPlugin extends Plugin
 					delta = 3;
 					break;
 				}
+				if (weapon == 26219) // Osmumten's Fang
+				{
+					delta = 5;
+					break;
+				}
+
 			case 1062: // dds spec
 			case 1067: // claw stab
 			case 1074: // msb spec
@@ -174,9 +183,23 @@ public class TickCounterPlugin extends Plugin
 					delta = 5;
 				break;
 			case 1378:
-			case 7045:
-			case 7054:
-			case 7055: // godsword autos
+				if (weapon == 27690)
+					delta = 4;
+				else
+					delta = 6;
+				break;
+			case 7045: // Godsword Slash
+			case 7054: // Godsword Smash
+			case 7055: // Godsword Block
+				if (weapon == 12809 || weapon == 11838) // Saradomin Sword + Blessed Variant
+					delta = 4;
+				else // Godswords
+					delta = 6;
+				break;
+			case 1132: // Saradomin Sword Special Attack
+			case 1133: // Saradomin's Blessed Sword Special Attack
+				delta = 4;
+				break;
 			case 7511: // dinh's attack
 			case 7516: // maul attack
 			case 7555: // ballista attack
@@ -192,6 +215,18 @@ public class TickCounterPlugin extends Plugin
 			case 1203: // chally spec
 				delta = 7;
 				break;
+			case 9471: // Osmumten's Fang Stab
+				delta = 5;
+				break;
+			case 6118: // Osmumten's Fang Spec
+				delta = 5;
+				break;
+			case 9493: // Tumuken's Shadow
+				// Weapon ID - 27275
+				delta = 5;
+			case 9168: // Zaryte Crossbow
+				// Weapon ID - 26374
+				delta = 5;
 			case -1:
 				blowpiping.remove(p);
 				break;
