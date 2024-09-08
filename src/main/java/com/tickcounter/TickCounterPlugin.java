@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import com.google.inject.Provides;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
+import net.runelite.api.ItemID;
 import net.runelite.api.Player;
 import net.runelite.api.MenuAction;
 import net.runelite.api.events.AnimationChanged;
@@ -89,7 +90,7 @@ public class TickCounterPlugin extends Plugin
 				break;
 			case 426: // bow shoot
 				if (weapon == 20997) // twisted bow
-					delta = 5; 
+					delta = 5;
 				else if (weapon == 25865 || weapon == 25867 || weapon == 25869 || weapon == 25884 || weapon == 25884 || weapon == 25886 || weapon == 25888 || weapon == 25890 || weapon == 25892 || weapon == 25894 || weapon == 25896)
 					// Bow of Faerdhinen
 					delta = 4;
@@ -213,7 +214,10 @@ public class TickCounterPlugin extends Plugin
 			case 428: // chally swipe
 			case 440: // chally jab
 			case 1203: // chally spec
-				delta = 7;
+				if (weapon == ItemID.NOXIOUS_HALBERD)
+					delta = 5;
+				else
+					delta = 7;
 				break;
 			case 9471: // Osmumten's Fang Stab
 				delta = 5;
