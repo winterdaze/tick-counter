@@ -75,7 +75,8 @@ public class TickCounterPlugin extends Plugin
 			case 8194: // dragon knife
 			case 8291: // dragon knife spec
 			case 5061: // blowpipe
-				if (weapon == 12926)
+			case 10656:
+				if (weapon == 12926 || weapon == 28688)
 				{
 					blowpiping.put(p, Boolean.FALSE);
 				}
