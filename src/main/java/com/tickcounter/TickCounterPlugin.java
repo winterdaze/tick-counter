@@ -200,6 +200,7 @@ public class TickCounterPlugin extends Plugin
 				break;
 			case 1132: // Saradomin Sword Special Attack
 			case 1133: // Saradomin's Blessed Sword Special Attack
+			case 11275: // Voidwaker Special Attack
 				delta = 4;
 				break;
 			case 7511: // dinh's attack
@@ -223,7 +224,7 @@ public class TickCounterPlugin extends Plugin
 			case 9471: // Osmumten's Fang Stab
 				delta = 5;
 				break;
-			case 6118: // Osmumten's Fang Spec
+			case 11222: // Osmumten's Fang Spec
 				delta = 5;
 				break;
 			case 9493: // Tumuken's Shadow
