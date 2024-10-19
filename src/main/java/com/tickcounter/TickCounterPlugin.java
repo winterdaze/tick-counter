@@ -25,6 +25,8 @@ import net.runelite.client.ui.overlay.OverlayManager;
 )
 public class TickCounterPlugin extends Plugin
 {
+	private static final int BLOOD_RAGER = 2792;
+
 	@Inject
 	private OverlayManager overlayManager;
 	@Inject
@@ -228,12 +230,15 @@ public class TickCounterPlugin extends Plugin
 			case 9493: // Tumuken's Shadow
 				// Weapon ID - 27275
 				delta = 5;
+				break;
 			case 9168: // Zaryte Crossbow
 				// Weapon ID - 26374
 				delta = 5;
+				break;
 			case 7516: // elder maul basic attack
 			case 11124: // elder maul special attack
 				delta = 6;
+				break;
 			case -1:
 				blowpiping.remove(p);
 				break;
