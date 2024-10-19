@@ -25,7 +25,7 @@ import net.runelite.client.ui.overlay.OverlayManager;
 )
 public class TickCounterPlugin extends Plugin
 {
-	private static final int BLOOD_RAGER = 2792;
+	private static final int SPOTANIM_BLOOD_RAGER = 2792;
 
 	@Inject
 	private OverlayManager overlayManager;
@@ -238,6 +238,16 @@ public class TickCounterPlugin extends Plugin
 			case 7516: // elder maul basic attack
 			case 11124: // elder maul special attack
 				delta = 6;
+				break;
+			case 10989: // dual macuahuitl
+				if (client.getLocalPlayer().hasSpotAnim(SPOTANIM_BLOOD_RAGER))
+				{
+					delta = 3;
+				}
+				else
+				{
+					delta = 4;
+				}
 				break;
 			case -1:
 				blowpiping.remove(p);
