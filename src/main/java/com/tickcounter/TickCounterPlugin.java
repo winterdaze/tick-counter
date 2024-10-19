@@ -203,7 +203,6 @@ public class TickCounterPlugin extends Plugin
 				delta = 4;
 				break;
 			case 7511: // dinh's attack
-			case 7516: // maul attack
 			case 7555: // ballista attack
 			case 7638: // zgs spec
 			case 7640: // sgs spec
@@ -232,6 +231,9 @@ public class TickCounterPlugin extends Plugin
 			case 9168: // Zaryte Crossbow
 				// Weapon ID - 26374
 				delta = 5;
+			case 7516: // elder maul basic attack
+			case 11124: // elder maul special attack
+				delta = 6;
 			case -1:
 				blowpiping.remove(p);
 				break;
