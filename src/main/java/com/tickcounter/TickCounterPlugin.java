@@ -249,6 +249,10 @@ public class TickCounterPlugin extends Plugin
 					delta = 4;
 				}
 				break;
+			case 10914: // tonalztics spec
+			case 10923: // tonalztics regular
+				delta = 6;
+				break;
 			case -1:
 				blowpiping.remove(p);
 				break;
