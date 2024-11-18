@@ -77,7 +77,7 @@ public class TickCounterPlugin extends Plugin
 			case 8194: // dragon knife
 			case 8291: // dragon knife spec
 			case 5061: // blowpipe
-			case 10656:
+			case 10656: // blazing blowpipe
 				if (weapon == 12926 || weapon == 28688)
 				{
 					blowpiping.put(p, Boolean.FALSE);
@@ -88,11 +88,15 @@ public class TickCounterPlugin extends Plugin
 				}
 				break;
 			case 2323: // rpg
+			case 9964: // Webweaver bow Spec
+			case 2075: // Karil's crossbow auto
 			case 7618: // chin
 				delta = 3;
 				break;
 			case 426: // bow shoot
-				if (weapon == 20997) // twisted bow
+				if (weapon == 11235 || weapon == 12765 || weapon == 12766 || weapon == 12767 || weapon == 12768 || weapon == 27853) // dark bow
+					delta = 8;
+				else if (weapon == 20997) // twisted bow
 					delta = 5;
 				else if (weapon == 25865 || weapon == 25867 || weapon == 25869 || weapon == 25884 || weapon == 25884 || weapon == 25886 || weapon == 25888 || weapon == 25890 || weapon == 25892 || weapon == 25894 || weapon == 25896)
 					// Bow of Faerdhinen
@@ -111,24 +115,39 @@ public class TickCounterPlugin extends Plugin
 					delta = 3;
 					break;
 				}
-				if (weapon == 26219) // Osmumten's Fang
+				if (weapon == 26219 || weapon == 27246) // Osmumten's Fang & Osmunten's Fang (or)
 				{
 					delta = 5;
 					break;
 				}
-
 			case 1062: // dds spec
 			case 1067: // claw stab
 			case 1074: // msb spec
 			case 1167: // trident cast
-			case 1658: // whip
+			case 1658: // Whip
+			case 9963: // Ursine Chainmace Spec
+			case 380: // spear slash
+			case 382: // spear crush
+			case 381: // Keris partisan stab
+			case 419: // Keris partisan crush
+			case 9961: // Accursed sceptre spec
+			case 245: // Wildy Maces
+			case 414: // Wand melee auto
+			case 1132: // Saradomin Sword Special Attack
+			case 1133: // Saradomin's Blessed Sword Special Attack
+			case 11275: // Voidwaker Special Attack
+			case 11140: // Burning claws Special Attack
+			case 10501: // Warped sceptre
 			case 2890: // arclight spec
+			case 11138: // emberlight spec
 			case 3294: // abby dagger slash
 			case 3297: // abby dagger poke
 			case 3298: // bludgeon attack
 			case 3299: // bludgeon spec
 			case 3300: // abby dagger spec
+			case 4198: // bone dagger spec
 			case 7514: // claw spec
+			case 9858: // Venator bow
 			case 7515: // d sword spec
 			case 8145: // rapier stab
 			case 8288: // dhl stab
@@ -140,6 +159,8 @@ public class TickCounterPlugin extends Plugin
 			case 8289: // dhl slash
 			case 8290: // dhl crush
 			case 4503: // inquisitor's mace crush
+				delta = 4;
+				break;
 			case 1711: // zamorakian spear
 				if (config.showZamorakianSpear())
 				{
@@ -152,7 +173,7 @@ public class TickCounterPlugin extends Plugin
 					break;
 				}
 			case 393: // staff bash
-				if (weapon == 13652)
+				if (weapon == 13652 || weapon == 28039 || weapon == 29577)
 				{ // claw scratch
 					delta = 4;
 					break;
@@ -174,8 +195,44 @@ public class TickCounterPlugin extends Plugin
 					break;
 				}
 			case 7552: // generic crossbow
+				if (weapon == 28869 || weapon == 10156) // Hunters' Sunlight crossbow & Hunters' crossbow
+				{
+					delta = 3;
+					break;
+				}
+				if (weapon == 8880) // Dorgeshuun crossbow
+				{
+					delta = 4;
+					break;
+				}
 			case 1979: // barrage spell cast
+			case 2062: // Verac's flail
+				if (weapon == 28792) // Bone mace
+				{
+					delta= 4;
+					break;
+				}
+			case 2068: // Torag's hammers,
+				if (weapon == 29084 || weapon == 29889) // Sulphur blades, Glacial temotli
+				{
+					delta = 4;
+					break;
+				}
+			case 1064: // dspear spec
+			case 2082: // Guthan's warspear crush
+			case 2080: // Guthan's warspear stab
+			case 2081: // Guthan's warspear slash
+			case 6147: // ancient mace spec
+			case 7511: // dinh's attack
 			case 8056: // scythe swing
+			case 8010: // Blisterwood flail
+			case 9168: // Zaryte crossbow
+			case 9471: // Osmumten's fang stab
+			case 9493: // Tumeken's shadow
+			case 10171: // Soulreaper axe crush auto
+			case 10172: // Soulreaper axe auto
+			case 10173: // Soulreaper axe spec
+			case 11222: // Osmumten's fang Special
 				delta = 5;
 				break;
 			case 401:
@@ -200,44 +257,36 @@ public class TickCounterPlugin extends Plugin
 				else // Godswords
 					delta = 6;
 				break;
-			case 1132: // Saradomin Sword Special Attack
-			case 1133: // Saradomin's Blessed Sword Special Attack
-				delta = 4;
-				break;
-			case 7511: // dinh's attack
+			case 2078: // Ahrim's staff
+			case 7516: // Elder maul attack
 			case 7555: // ballista attack
+			case 7556: // ballista spec
 			case 7638: // zgs spec
 			case 7640: // sgs spec
 			case 7642: // bgs spec
 			case 7643: // bgs spec
 			case 7644: // ags spec
+			case 5865: // barrelchest anchor
+			case 5870: // barrelchest anchor spec
+			case 10427: // ags spec (deadman)
+			case 10914: // Ralos Basic Attack
+			case 10923: // Ralos Special Attack
+			case 11124: // Elder maul spec
 				delta = 6;
 				break;
 			case 428: // chally swipe
 			case 440: // chally jab
+			case 2066: // Dharok's greataxe crush
+			case 2067: // Dharok's greataxe slash
+			case 10079: // felling axe autos
 			case 1203: // chally spec
 				if (weapon == ItemID.NOXIOUS_HALBERD)
 					delta = 5;
 				else
 					delta = 7;
 				break;
-			case 9471: // Osmumten's Fang Stab
-				delta = 5;
-				break;
-			case 6118: // Osmumten's Fang Spec
-				delta = 5;
-				break;
-			case 9493: // Tumuken's Shadow
-				// Weapon ID - 27275
-				delta = 5;
-				break;
-			case 9168: // Zaryte Crossbow
-				// Weapon ID - 26374
-				delta = 5;
-				break;
-			case 7516: // elder maul basic attack
-			case 11124: // elder maul special attack
-				delta = 6;
+			case 9544: //Keris of Corruption Spec
+				delta = 8;
 				break;
 			case 10989: // dual macuahuitl
 				if (client.getLocalPlayer().hasSpotAnim(SPOTANIM_BLOOD_RAGER))
@@ -248,10 +297,6 @@ public class TickCounterPlugin extends Plugin
 				{
 					delta = 4;
 				}
-				break;
-			case 10914: // tonalztics spec
-			case 10923: // tonalztics regular
-				delta = 6;
 				break;
 			case -1:
 				blowpiping.remove(p);
