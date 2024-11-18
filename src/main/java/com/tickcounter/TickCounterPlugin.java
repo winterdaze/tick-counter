@@ -218,6 +218,7 @@ public class TickCounterPlugin extends Plugin
 					delta = 4;
 					break;
 				}
+			case 1058: // wildy sceptres melee auto
 			case 1064: // dspear spec
 			case 2082: // Guthan's warspear crush
 			case 2080: // Guthan's warspear stab
