@@ -87,10 +87,12 @@ public class TickCounterPlugin extends Plugin
 					delta = 2;
 				}
 				break;
-			case 2323: // rpg
-			case 9964: // Webweaver bow Spec
+			case 2323: // Event rpg
+			case 9964: // Webweaver bow spec
 			case 2075: // Karil's crossbow auto
-			case 7618: // chin
+			case 7618: // Chinchompas
+			case 11057: // Eclipse atlatl
+			case 11060: // Eclipse atlatl spec
 				delta = 3;
 				break;
 			case 426: // bow shoot
@@ -98,7 +100,7 @@ public class TickCounterPlugin extends Plugin
 					delta = 8;
 				else if (weapon == 20997) // twisted bow
 					delta = 5;
-				else if (weapon == 25865 || weapon == 25867 || weapon == 25869 || weapon == 25884 || weapon == 25884 || weapon == 25886 || weapon == 25888 || weapon == 25890 || weapon == 25892 || weapon == 25894 || weapon == 25896)
+				else if (weapon == 25865 || weapon == 25867 || weapon == 25869 || weapon == 25884 || weapon == 25886 || weapon == 25888 || weapon == 25890 || weapon == 25892 || weapon == 25894 || weapon == 25896)
 					// Bow of Faerdhinen
 					delta = 4;
 				else // shortbow
@@ -148,6 +150,12 @@ public class TickCounterPlugin extends Plugin
 			case 4198: // bone dagger spec
 			case 7514: // claw spec
 			case 9858: // Venator bow
+			case 10989: // Dual macuahuitl
+				if (client.getLocalPlayer().hasSpotAnim(SPOTANIM_BLOOD_RAGER)) // Blood moon effect
+				{
+					delta = 3;
+					break;
+				}
 			case 7515: // d sword spec
 			case 8145: // rapier stab
 			case 8288: // dhl stab
@@ -161,7 +169,14 @@ public class TickCounterPlugin extends Plugin
 			case 4503: // inquisitor's mace crush
 				delta = 4;
 				break;
-			case 1711: // zamorakian spear
+			case 1710: // zamorakian spear stab
+			case 1711: // zamorakian spear crush
+			case 1712: // zamorakian spear slash
+				if (weapon == 28988) // Blue moon spear
+				{
+					delta = 5;
+					break;
+				}
 				if (config.showZamorakianSpear())
 				{
 					delta = 4;
@@ -180,14 +195,21 @@ public class TickCounterPlugin extends Plugin
 				}
 			case 395: // axe autos
 			case 400: // pick smash
-				if (weapon == 24417)
+				if (weapon == 24417) // inquisitor's mace stab
 				{
-					// inquisitor's mace stab
 					delta = 4;
 					break;
 				}
-			case 1379: // burst or blitz
-			case 1162: // strike/bolt spells
+			case 708: // iban's blast
+			case 711: // strike/bolt/blast
+			case 718: // vulnerability
+			case 724: // crumble undead
+			case 727: // wave spells
+			case 1161: // bind/snare/entangle w/ staff
+			case 1162: // strike/bolt/blast w/ staff
+			case 1165: // vulnerability w/ staff
+			case 1166: // crumble undead w/ staff
+			case 1576: // magic dart
 			case 7855: // surge spells
 				if (weapon == 24423) // harmonised staff
 				{
@@ -205,7 +227,6 @@ public class TickCounterPlugin extends Plugin
 					delta = 4;
 					break;
 				}
-			case 1979: // barrage spell cast
 			case 2062: // Verac's flail
 				if (weapon == 28792) // Bone mace
 				{
@@ -218,8 +239,14 @@ public class TickCounterPlugin extends Plugin
 					delta = 4;
 					break;
 				}
+			case 429: // Leaf-bladed spear crush
+			case 8972: // Undead grasp
+			case 7004: // Zombie axe slash
+			case 3852: // Zombie axe crush
 			case 1058: // wildy sceptres melee auto
 			case 1064: // dspear spec
+			case 1978: // rush and blitz spell cast
+			case 1979: // burst and barrage spell cast
 			case 2082: // Guthan's warspear crush
 			case 2080: // Guthan's warspear stab
 			case 2081: // Guthan's warspear slash
@@ -244,20 +271,15 @@ public class TickCounterPlugin extends Plugin
 				else // used by pickaxe and axe
 					delta = 5;
 				break;
-			case 1378:
-				if (weapon == 27690)
-					delta = 4;
-				else
-					delta = 6;
-				break;
+			case 1378: // Dragon warhammer spec
 			case 7045: // Godsword Slash
 			case 7054: // Godsword Smash
 			case 7055: // Godsword Block
 				if (weapon == 12809 || weapon == 11838) // Saradomin Sword + Blessed Variant
+				{
 					delta = 4;
-				else // Godswords
-					delta = 6;
-				break;
+					break;
+				}
 			case 2078: // Ahrim's staff
 			case 7516: // Elder maul attack
 			case 7555: // ballista attack
@@ -275,29 +297,21 @@ public class TickCounterPlugin extends Plugin
 			case 11124: // Elder maul spec
 				delta = 6;
 				break;
-			case 428: // chally swipe
-			case 440: // chally jab
+			case 428: // Crystal halberd stab
+			case 440: // Crystal halberd slash
+				if (weapon == 29796 || weapon == 4158) // Noxious halberd & Leaf-bladed spear
+				{
+					delta = 5;
+					break;
+				}
 			case 2066: // Dharok's greataxe crush
 			case 2067: // Dharok's greataxe slash
 			case 10079: // felling axe autos
 			case 1203: // chally spec
-				if (weapon == ItemID.NOXIOUS_HALBERD)
-					delta = 5;
-				else
-					delta = 7;
+				delta = 7;
 				break;
-			case 9544: //Keris of Corruption Spec
+			case 9544: // Keris of Corruption Spec
 				delta = 8;
-				break;
-			case 10989: // dual macuahuitl
-				if (client.getLocalPlayer().hasSpotAnim(SPOTANIM_BLOOD_RAGER))
-				{
-					delta = 3;
-				}
-				else
-				{
-					delta = 4;
-				}
 				break;
 			case -1:
 				blowpiping.remove(p);
