@@ -21,12 +21,23 @@ public interface TickCounterConfig extends Config
 		return true;
 	}
 
+	@ConfigItem(
+		keyName = "titleEnabled",
+		name = "Show title bar",
+		description = "",
+		position = 2
+	)
+	default boolean titleEnabled()
+	{
+		return true;
+	}
+
 	@Alpha
 	@ConfigItem(
 			keyName = "titleColor",
 			name = "Title color",
 			description = "",
-			position = 2
+			position = 3
 	)
 	default Color titleColor()
 	{
@@ -38,7 +49,7 @@ public interface TickCounterConfig extends Config
 		keyName = "selfColor",
 		name = "Your color",
 		description = "",
-		position = 3
+		position = 4
 	)
 	default Color selfColor()
 	{
@@ -50,7 +61,7 @@ public interface TickCounterConfig extends Config
 			keyName = "otherColor",
 			name = "Other players color",
 			description = "",
-			position = 4
+			position = 5
 	)
 	default Color otherColor()
 	{
@@ -61,7 +72,7 @@ public interface TickCounterConfig extends Config
 		keyName = "totalEnabled",
 		name = "Show total ticks",
 		description = "",
-		position = 5
+		position = 6
 	)
 	default boolean totalEnabled()
 	{
@@ -73,7 +84,7 @@ public interface TickCounterConfig extends Config
 		keyName = "totalColor",
 		name = "Total color",
 		description = "",
-		position = 6
+		position = 7
 	)
 	default Color totalColor()
 	{
@@ -84,7 +95,7 @@ public interface TickCounterConfig extends Config
 		keyName = "showZamorakianSpear",
 		name = "Include Zamorakian Spear",
 		description = "",
-		position = 7
+		position = 8
 	)
 	default boolean showZamorakianSpear()
 	{
