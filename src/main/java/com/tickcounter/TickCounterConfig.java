@@ -11,7 +11,7 @@ import java.awt.Color;
 public interface TickCounterConfig extends Config
 {
 	@ConfigItem(
-		keyName = "resetInstance",
+		keyName = TickCounterPlugin.CONFIG_KEY_RESET_INSTANCE,
 		name = "Reset on new instances",
 		description = "",
 		position = 1
