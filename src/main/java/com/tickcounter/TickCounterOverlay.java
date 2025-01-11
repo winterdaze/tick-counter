@@ -53,7 +53,7 @@ public class TickCounterOverlay extends OverlayPanel
 				return value;
 			}
 		});
-		if (list.size() != 0) elems.add(TitleComponent.builder().text("Tick counter").color(config.titleColor()).build());
+		if (list.size() != 0 && config.titleEnabled()) elems.add(TitleComponent.builder().text("Tick counter").color(config.titleColor()).build());
 		int total = 0;
 		for (Entry<String, Integer> e : list)
 		{

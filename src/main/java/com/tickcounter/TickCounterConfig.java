@@ -7,11 +7,11 @@ import net.runelite.client.config.ConfigItem;
 
 import java.awt.Color;
 
-@ConfigGroup("tickcounter")
+@ConfigGroup(TickCounterPlugin.CONFIG_GROUP)
 public interface TickCounterConfig extends Config
 {
 	@ConfigItem(
-		keyName = "resetInstance",
+		keyName = TickCounterPlugin.CONFIG_KEY_RESET_INSTANCE,
 		name = "Reset on new instances",
 		description = "",
 		position = 1
@@ -21,12 +21,34 @@ public interface TickCounterConfig extends Config
 		return true;
 	}
 
+	@ConfigItem(
+		keyName = TickCounterPlugin.CONFIG_KEY_INSTANCE_ONLY,
+		name = "Only track inside instances",
+		description = "The tick counter will only work inside raids and some PvM encounters",
+		position = 2
+	)
+	default boolean instanceOnly()
+	{
+		return false;
+	}
+
+	@ConfigItem(
+		keyName = "titleEnabled",
+		name = "Show title bar",
+		description = "",
+		position = 3
+	)
+	default boolean titleEnabled()
+	{
+		return true;
+	}
+
 	@Alpha
 	@ConfigItem(
 			keyName = "titleColor",
 			name = "Title color",
 			description = "",
-			position = 2
+			position = 4
 	)
 	default Color titleColor()
 	{
@@ -38,7 +60,7 @@ public interface TickCounterConfig extends Config
 		keyName = "selfColor",
 		name = "Your color",
 		description = "",
-		position = 3
+		position = 5
 	)
 	default Color selfColor()
 	{
@@ -50,7 +72,7 @@ public interface TickCounterConfig extends Config
 			keyName = "otherColor",
 			name = "Other players color",
 			description = "",
-			position = 4
+			position = 6
 	)
 	default Color otherColor()
 	{
@@ -61,7 +83,7 @@ public interface TickCounterConfig extends Config
 		keyName = "totalEnabled",
 		name = "Show total ticks",
 		description = "",
-		position = 5
+		position = 7
 	)
 	default boolean totalEnabled()
 	{
@@ -73,7 +95,7 @@ public interface TickCounterConfig extends Config
 		keyName = "totalColor",
 		name = "Total color",
 		description = "",
-		position = 6
+		position = 8
 	)
 	default Color totalColor()
 	{
@@ -84,7 +106,7 @@ public interface TickCounterConfig extends Config
 		keyName = "showZamorakianSpear",
 		name = "Include Zamorakian Spear",
 		description = "",
-		position = 7
+		position = 9
 	)
 	default boolean showZamorakianSpear()
 	{

@@ -6,11 +6,11 @@ import javax.inject.Inject;
 import com.google.inject.Provides;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
-import net.runelite.api.ItemID;
 import net.runelite.api.Player;
 import net.runelite.api.MenuAction;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.GameTick;
+import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.events.OverlayMenuClicked;
 import net.runelite.api.kit.KitType;
 import net.runelite.client.config.ConfigManager;
@@ -25,6 +25,10 @@ import net.runelite.client.ui.overlay.OverlayManager;
 )
 public class TickCounterPlugin extends Plugin
 {
+	public static final String CONFIG_GROUP = "tickcounter";
+	public static final String CONFIG_KEY_RESET_INSTANCE = "resetInstance";
+	public static final String CONFIG_KEY_INSTANCE_ONLY = "instanceOnly";
+
 	private static final int SPOTANIM_BLOOD_RAGER = 2792;
 
 	@Inject
@@ -48,10 +52,16 @@ public class TickCounterPlugin extends Plugin
 	boolean instanced = false;
 	boolean prevInstance = false;
 
+	private boolean resetOnInstance = true;
+	private boolean trackInstanceOnly = false;
+
 	@Override
 	protected void startUp() throws Exception
 	{
 		overlayManager.add(overlay);
+
+		resetOnInstance = config.instance();
+		trackInstanceOnly = config.instanceOnly();
 	}
 
 	@Override
@@ -64,7 +74,7 @@ public class TickCounterPlugin extends Plugin
 	@Subscribe
 	public void onAnimationChanged(AnimationChanged e)
 	{
-		if (!(e.getActor() instanceof Player))
+		if (!(e.getActor() instanceof Player) || (trackInstanceOnly && !instanced))
 			return;
 		Player p = (Player) e.getActor();
 		int weapon = -1;
@@ -341,13 +351,11 @@ public class TickCounterPlugin extends Plugin
 				blowpiping.put(entry.getKey(), Boolean.TRUE);
 			}
 		}
-		if (!config.instance())return;
 		prevInstance = instanced;
 		instanced = client.isInInstancedRegion();
-		if (!prevInstance && instanced)
+		if (resetOnInstance && !prevInstance && instanced)
 		{
-			activity.clear();
-			blowpiping.clear();
+			reset();
 		}
 	}
 
@@ -358,9 +366,39 @@ public class TickCounterPlugin extends Plugin
 			event.getEntry().getTarget().equals("Tick counter") &&
 			event.getEntry().getOption().equals("Reset"))
 		{
-			activity.clear();
-			blowpiping.clear();
+			reset();
 		}
 	}
 
+	@Subscribe
+	public void onConfigChanged(ConfigChanged event)
+	{
+		if (!event.getGroup().equals(CONFIG_GROUP))
+		{
+			return;
+		}
+
+		if (event.getKey().equals(CONFIG_KEY_RESET_INSTANCE))
+		{
+			resetOnInstance = config.instance();
+		}
+
+		if (event.getKey().equals(CONFIG_KEY_INSTANCE_ONLY))
+		{
+			trackInstanceOnly = config.instanceOnly();
+
+			// "Instance only" has been toggled and the player is not in an instance so we can reset the counter
+			if (trackInstanceOnly && !instanced)
+			{
+				log.debug("Instance only enabled, resetting tick counter");
+				reset();
+			}
+		}
+	}
+
+	private void reset()
+	{
+		activity.clear();
+		blowpiping.clear();
+	}
 }
