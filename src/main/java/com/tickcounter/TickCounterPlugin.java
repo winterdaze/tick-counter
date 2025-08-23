@@ -48,7 +48,7 @@ public class TickCounterPlugin extends Plugin
 
 	Map<String, Integer> activity = new HashMap<>();
 
-	private HashMap<Player, Boolean> blowpiping = new HashMap<>();
+	private HashMap<Player, ExtendedAnimation> extendedAnims = new HashMap<>();
 	boolean instanced = false;
 	boolean prevInstance = false;
 
@@ -90,7 +90,7 @@ public class TickCounterPlugin extends Plugin
 			case 10656: // blazing blowpipe
 				if (weapon == 12926 || weapon == 28688)
 				{
-					blowpiping.put(p, Boolean.FALSE);
+					extendedAnims.put(p, new ExtendedAnimation(2, weapon));
 				}
 				else
 				{
@@ -104,7 +104,13 @@ public class TickCounterPlugin extends Plugin
 			case 11057: // Eclipse atlatl
 			case 11060: // Eclipse atlatl spec
 			case 12397: // Eye of Ayak
-				delta = 3;
+				if (weapon == 31113) {
+					extendedAnims.put(p, new ExtendedAnimation(3, weapon));
+				}
+				else
+				{
+					delta = 3;
+				}
 				break;
 			case 426: // bow shoot
 				if (weapon == 11235 || weapon == 12765 || weapon == 12766 || weapon == 12767 || weapon == 12768 || weapon == 27853) // dark bow
@@ -279,7 +285,13 @@ public class TickCounterPlugin extends Plugin
 			case 10173: // Soulreaper axe spec
 			case 11222: // Osmumten's fang Special
 			case 12394: // Eye of Ayak Special
-				delta = 5;
+				if (weapon == 31113) {
+					extendedAnims.put(p, new ExtendedAnimation(5, weapon));
+				}
+				else
+				{
+					delta = 5;
+				}
 				break;
 			case 401:
 				if (weapon == 13576) // dwh bop
@@ -332,7 +344,7 @@ public class TickCounterPlugin extends Plugin
 				delta = 8;
 				break;
 			case -1:
-				blowpiping.remove(p);
+				extendedAnims.remove(p);
 				break;
 		}
 		if (delta > 0)
@@ -345,20 +357,21 @@ public class TickCounterPlugin extends Plugin
 	@Subscribe
 	public void onGameTick(GameTick tick)
 	{
-		for (Map.Entry<Player, Boolean> entry : blowpiping.entrySet())
+		final int currentTick = client.getTickCount();
+
+		for (Map.Entry<Player, ExtendedAnimation> entry : extendedAnims.entrySet())
 		{
-			if (entry.getValue())
+			ExtendedAnimation extAnim = entry.getValue();
+			if (extAnim.lastTick == 0 || currentTick >= (extAnim.delta + extAnim.lastTick))
 			{
 				String name = entry.getKey().getName();
 				int activity = this.activity.getOrDefault(name, 0).intValue();
-				this.activity.put(name, activity + 2);
-				blowpiping.put(entry.getKey(), Boolean.FALSE);
-			}
-			else
-			{
-				blowpiping.put(entry.getKey(), Boolean.TRUE);
+				this.activity.put(name, activity + extAnim.delta);
+				extAnim.lastTick = currentTick;
+				extendedAnims.put(entry.getKey(), extAnim);
 			}
 		}
+
 		prevInstance = instanced;
 		instanced = client.isInInstancedRegion();
 		if (resetOnInstance && !prevInstance && instanced)
@@ -407,6 +420,6 @@ public class TickCounterPlugin extends Plugin
 	private void reset()
 	{
 		activity.clear();
-		blowpiping.clear();
+		extendedAnims.clear();
 	}
 }
