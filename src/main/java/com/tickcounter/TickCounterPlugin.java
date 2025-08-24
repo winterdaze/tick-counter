@@ -183,6 +183,7 @@ public class TickCounterPlugin extends Plugin
 			case 8289: // dhl slash
 			case 8290: // dhl crush
 			case 4503: // inquisitor's mace crush
+			case 12342: // earthbound tecpatl
 				delta = 4;
 				break;
 			case 1710: // zamorakian spear stab
