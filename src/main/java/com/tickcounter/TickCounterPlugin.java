@@ -78,10 +78,15 @@ public class TickCounterPlugin extends Plugin
 			return;
 		Player p = (Player) e.getActor();
 		int weapon = -1;
+		int animation = p.getAnimation();
 		if (p.getPlayerComposition() != null)
 			weapon = p.getPlayerComposition().getEquipmentId(KitType.WEAPON);
 		int delta = 0;
-		switch (p.getAnimation())
+		int currentTick = client.getTickCount();
+		ExtendedAnimation curExtAnim = extendedAnims.get(p);
+		ExtendedAnimation extAnim = null;
+
+		switch (animation)
 		{
 			case 7617: // rune knife
 			case 8194: // dragon knife
@@ -90,7 +95,7 @@ public class TickCounterPlugin extends Plugin
 			case 10656: // blazing blowpipe
 				if (weapon == 12926 || weapon == 28688)
 				{
-					extendedAnims.put(p, new ExtendedAnimation(2, weapon));
+					extAnim = new ExtendedAnimation(2, animation, weapon, currentTick);
 				}
 				else
 				{
@@ -105,7 +110,7 @@ public class TickCounterPlugin extends Plugin
 			case 11060: // Eclipse atlatl spec
 			case 12397: // Eye of Ayak
 				if (weapon == 31113) {
-					extendedAnims.put(p, new ExtendedAnimation(3, weapon));
+					extAnim = new ExtendedAnimation(3, animation, weapon, currentTick);
 				}
 				else
 				{
@@ -287,7 +292,7 @@ public class TickCounterPlugin extends Plugin
 			case 11222: // Osmumten's fang Special
 			case 12394: // Eye of Ayak Special
 				if (weapon == 31113) {
-					extendedAnims.put(p, new ExtendedAnimation(5, weapon));
+					extAnim = new ExtendedAnimation(5, animation, weapon, currentTick);
 				}
 				else
 				{
@@ -344,14 +349,25 @@ public class TickCounterPlugin extends Plugin
 			case 9544: // Keris of Corruption Spec
 				delta = 8;
 				break;
-			case -1:
-				extendedAnims.remove(p);
+			case -1: // Animation reset
+				delta = -1;
 				break;
 		}
 		if (delta > 0)
 		{
 			String name = p.getName();
 			this.activity.put(name, this.activity.getOrDefault(name, 0) + delta);
+		}
+		else if (extAnim != null) // new extended animation (blowpipe/ayak)
+		{
+			extendedAnims.put(p, extAnim);
+			logExtendedActivity(p, currentTick, extAnim); // track first hit activity immediately
+		}
+
+		// Extended animation reset (ie stop attacking or changed to non-tracking animation)
+		if (curExtAnim != null && delta != 0)
+		{
+			extendedAnims.remove(p);
 		}
 	}
 
@@ -363,13 +379,16 @@ public class TickCounterPlugin extends Plugin
 		for (Map.Entry<Player, ExtendedAnimation> entry : extendedAnims.entrySet())
 		{
 			ExtendedAnimation extAnim = entry.getValue();
-			if (extAnim.lastTick == 0 || currentTick >= (extAnim.delta + extAnim.lastTick))
+			if (currentTick >= (extAnim.lastTick + extAnim.delta))
 			{
-				String name = entry.getKey().getName();
-				int activity = this.activity.getOrDefault(name, 0).intValue();
-				this.activity.put(name, activity + extAnim.delta);
-				extAnim.lastTick = currentTick;
-				extendedAnims.put(entry.getKey(), extAnim);
+				if (!extAnim.firstHit) // first hit is already tracked immediately on animation change
+				{
+					logExtendedActivity(entry.getKey(), currentTick, extAnim);
+				}
+				else
+				{
+					extAnim.firstHit = false;
+				}
 			}
 		}
 
@@ -379,6 +398,14 @@ public class TickCounterPlugin extends Plugin
 		{
 			reset();
 		}
+	}
+
+	private void logExtendedActivity(Player p, int currentTick, ExtendedAnimation extAnim)
+	{
+		String name = p.getName();
+		int activity = this.activity.getOrDefault(name, 0).intValue();
+		this.activity.put(name, activity + extAnim.delta);
+		extAnim.lastTick = currentTick;
 	}
 
 	@Subscribe
