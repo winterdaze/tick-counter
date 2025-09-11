@@ -5,8 +5,7 @@ public class ExtendedAnimation
 	public int delta;
 	public int animation;
 	public int weapon;
-	public int lastTick = 0;
-	public boolean firstHit = true;
+	public int lastTick;
 
 	public ExtendedAnimation(int delta, int animation, int weapon, int currentTick)
 	{
@@ -14,5 +13,10 @@ public class ExtendedAnimation
 		this.animation = animation;
 		this.weapon = weapon;
 		this.lastTick = currentTick;
+	}
+
+	public int eligibleAt()
+	{
+		return lastTick + delta;
 	}
 }

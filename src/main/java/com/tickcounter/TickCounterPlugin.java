@@ -361,13 +361,22 @@ public class TickCounterPlugin extends Plugin
 		else if (extAnim != null) // new extended animation (blowpipe/ayak)
 		{
 			extendedAnims.put(p, extAnim);
-			logExtendedActivity(p, currentTick, extAnim); // track first hit activity immediately
 		}
 
 		// Extended animation reset (ie stop attacking or changed to non-tracking animation)
-		if (curExtAnim != null && delta != 0)
+		if (curExtAnim != null && (delta != 0 || extAnim != null))
 		{
-			extendedAnims.remove(p);
+			// track pending activity if eligible
+			if (currentTick >= curExtAnim.eligibleAt() || extAnim != null)
+			{
+				logExtendedActivity(p, currentTick, curExtAnim);
+			}
+
+			// remove if animation changed or reset
+			if (delta != 0)
+			{
+				extendedAnims.remove(p);
+			}
 		}
 	}
 
@@ -379,16 +388,9 @@ public class TickCounterPlugin extends Plugin
 		for (Map.Entry<Player, ExtendedAnimation> entry : extendedAnims.entrySet())
 		{
 			ExtendedAnimation extAnim = entry.getValue();
-			if (currentTick >= (extAnim.lastTick + extAnim.delta))
+			if (currentTick >= extAnim.eligibleAt())
 			{
-				if (!extAnim.firstHit) // first hit is already tracked immediately on animation change
-				{
-					logExtendedActivity(entry.getKey(), currentTick, extAnim);
-				}
-				else
-				{
-					extAnim.firstHit = false;
-				}
+				logExtendedActivity(entry.getKey(), currentTick, extAnim);
 			}
 		}
 
