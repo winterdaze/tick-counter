@@ -55,19 +55,36 @@ public class TickCounterOverlay extends OverlayPanel
 		});
 		if (list.size() != 0 && config.titleEnabled()) elems.add(TitleComponent.builder().text("Tick counter").color(config.titleColor()).build());
 		int total = 0;
+		int includedPlayers = 0;
+		final int maxPlayers = config.maxPlayers();
 		for (Entry<String, Integer> e : list)
 		{
+			boolean isLocalPlayer = e.getKey().equals(client.getLocalPlayer().getName());
 			total += e.getValue();
-			if(e.getKey().equals(client.getLocalPlayer().getName()))
+			if (maxPlayers == 0 || includedPlayers < maxPlayers || isLocalPlayer)
 			{
-				elems.add(LineComponent.builder().leftColor(config.selfColor()).rightColor(config.selfColor()).left(e.getKey()).right(e.getValue().toString()).build());
-			}
-			else
-			{
-				elems.add(LineComponent.builder().left(e.getKey()).right(e.getValue().toString()).leftColor(config.otherColor()).rightColor(config.otherColor()).build());
+				includedPlayers++;
+				LineComponent.LineComponentBuilder lineBuilder = LineComponent.builder().left(e.getKey()).right(e.getValue().toString());
 
+				if (isLocalPlayer)
+				{
+					lineBuilder.leftColor(config.selfColor()).rightColor(config.selfColor());
+				}
+				else
+				{
+					lineBuilder.leftColor(config.otherColor()).rightColor(config.otherColor());
+				}
+
+				elems.add(lineBuilder.build());
 			}
 		}
+
+		// the local player might be outside top `maxPlayers`, and we have exceeded the cap and need to remove the 2nd-to-last entry
+		if (includedPlayers > maxPlayers)
+		{
+			elems.remove(elems.size() - 2);
+		}
+
 		if (config.totalEnabled())
 		{
 			if (list.size() != 0) elems.add(LineComponent.builder().left("Total").leftColor(config.totalColor()).rightColor(config.totalColor()).right(String.valueOf(total)).build());

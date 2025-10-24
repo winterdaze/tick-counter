@@ -112,4 +112,17 @@ public interface TickCounterConfig extends Config
 	{
 		return true;
 	}
+
+	@ConfigItem(
+		keyName = "maxPlayers",
+		name = "Max players displayed",
+		description = "Track all players, but only display this many in the overlay.<br>" +
+			"The local player will always be included within this limit.<br>" +
+			"Set to 0 to show all players.",
+		position = 10
+	)
+	default int maxPlayers()
+	{
+		return 0;
+	}
 }
