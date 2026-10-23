@@ -30,6 +30,7 @@ public class TickCounterPlugin extends Plugin
 	public static final String CONFIG_KEY_INSTANCE_ONLY = "instanceOnly";
 
 	private static final int SPOTANIM_BLOOD_RAGER = 2792;
+	private static final int ZORYA_FAST_ATTACKS = 3;
 
 	@Inject
 	private OverlayManager overlayManager;
@@ -49,6 +50,7 @@ public class TickCounterPlugin extends Plugin
 	Map<String, Integer> activity = new HashMap<>();
 
 	private HashMap<Player, ExtendedAnimation> extendedAnims = new HashMap<>();
+	private final Map<String, Integer> zoryaFastAttacks = new HashMap<>();
 	boolean instanced = false;
 	boolean prevInstance = false;
 
@@ -93,6 +95,10 @@ public class TickCounterPlugin extends Plugin
 			case 8291: // dragon knife spec
 			case 5061: // blowpipe
 			case 10656: // blazing blowpipe
+			case 15113: // Ascension crossbows (rapid)
+			case 15114: // Ascension crossbows (rapid)
+			case 15115: // Ascension crossbows (rapid)
+			case 15116: // Ascension crossbows (rapid)
 				if (weapon == 12926 || weapon == 28688)
 				{
 					extAnim = new ExtendedAnimation(2, animation, weapon, currentTick);
@@ -109,6 +115,8 @@ public class TickCounterPlugin extends Plugin
 			case 11057: // Eclipse atlatl
 			case 11060: // Eclipse atlatl spec
 			case 12397: // Eye of Ayak
+			case 15122: // Obligator smash
+			case 15130: // Obligator smash (female)
 				if (weapon == 31113) {
 					extAnim = new ExtendedAnimation(3, animation, weapon, currentTick);
 				}
@@ -124,6 +132,8 @@ public class TickCounterPlugin extends Plugin
 					delta = 5;
 				else if (weapon == 25865 || weapon == 25867 || weapon == 25869 || weapon == 25884 || weapon == 25886 || weapon == 25888 || weapon == 25890 || weapon == 25892 || weapon == 25894 || weapon == 25896)
 					// Bow of Faerdhinen
+					delta = 4;
+				else if (weapon == 29591) // Scorching bow (rapid)
 					delta = 4;
 				else // shortbow
 					delta = 3;
@@ -144,14 +154,19 @@ public class TickCounterPlugin extends Plugin
 					delta = 5;
 					break;
 				}
+			case 380: // spear slash
+			case 382: // spear crush
+			case 381: // spear stab / Keris partisan stab
+				if (weapon == 33722) // Sunspear
+				{
+					delta = 5;
+					break;
+				}
 			case 1062: // dds spec
 			case 1067: // claw stab
 			case 1074: // msb spec
 			case 1658: // Whip
 			case 9963: // Ursine Chainmace Spec
-			case 380: // spear slash
-			case 382: // spear crush
-			case 381: // Keris partisan stab
 			case 419: // Keris partisan crush
 			case 9961: // Accursed sceptre spec
 			case 245: // Wildy Maces
@@ -172,7 +187,7 @@ public class TickCounterPlugin extends Plugin
 			case 7514: // claw spec
 			case 9858: // Venator bow
 			case 10989: // Dual macuahuitl
-				if (client.getLocalPlayer().hasSpotAnim(SPOTANIM_BLOOD_RAGER)) // Blood moon effect
+				if (p.hasSpotAnim(SPOTANIM_BLOOD_RAGER)) // Blood moon effect
 				{
 					delta = 3;
 					break;
@@ -189,12 +204,18 @@ public class TickCounterPlugin extends Plugin
 			case 8290: // dhl crush
 			case 4503: // inquisitor's mace crush
 			case 12342: // earthbound tecpatl
+			case 12297: // Arkan blade Special Attack
+			case 14253: // Crimson kisten
+			case 566: // Crimson kisten (alt)
+			case 14255: // Crimson kisten Special Attack
+			case 14244: // Hallowed flail
+			case 14249: // Hallowed flail (alt)
 				delta = 4;
 				break;
 			case 1710: // zamorakian spear stab
 			case 1711: // zamorakian spear crush
 			case 1712: // zamorakian spear slash
-				if (weapon == 28988) // Blue moon spear
+				if (weapon == 28988 || weapon == 33722) // Blue moon spear, Sunspear
 				{
 					delta = 5;
 					break;
@@ -291,8 +312,16 @@ public class TickCounterPlugin extends Plugin
 			case 10173: // Soulreaper axe spec
 			case 11222: // Osmumten's fang Special
 			case 12394: // Eye of Ayak Special
+			case 8977: // Arceuus demonbane spells (also Purging staff)
+			case 14259: // Sunspear Special Attack
+			case 15123: // Obligator thrust (multihit)
+			case 15131: // Obligator thrust (multihit, female)
 				if (weapon == 31113) {
 					extAnim = new ExtendedAnimation(5, animation, weapon, currentTick);
+				}
+				else if (weapon == 30634) // Twinflame staff
+				{
+					delta = 6;
 				}
 				else
 				{
@@ -331,6 +360,9 @@ public class TickCounterPlugin extends Plugin
 			case 10914: // Ralos Basic Attack
 			case 10923: // Ralos Special Attack
 			case 11124: // Elder maul spec
+			case 14467: // Hallowfell chop
+			case 14469: // Hallowfell smash
+			case 14470: // Hallowfell slash
 				delta = 6;
 				break;
 			case 428: // Crystal halberd stab
@@ -348,6 +380,17 @@ public class TickCounterPlugin extends Plugin
 				break;
 			case 9544: // Keris of Corruption Spec
 				delta = 8;
+				break;
+			case 15140: // Zorya's tome Special Attack
+			case 15147: // Zorya's tome Special Attack (female)
+				// A landed spec makes the next 3 attacks 2 ticks instead of 3. Hits can't be seen for
+				// other players, so the spec is assumed to land (it has +150% accuracy).
+				delta = zoryaAttackSpeed(p);
+				zoryaFastAttacks.merge(p.getName(), ZORYA_FAST_ATTACKS, Integer::sum);
+				break;
+			case 15139: // Zorya's tome
+			case 15146: // Zorya's tome (female)
+				delta = zoryaAttackSpeed(p);
 				break;
 			case -1: // Animation reset
 				delta = -1;
@@ -447,9 +490,22 @@ public class TickCounterPlugin extends Plugin
 		}
 	}
 
+	private int zoryaAttackSpeed(Player p)
+	{
+		String name = p.getName();
+		int fastAttacks = zoryaFastAttacks.getOrDefault(name, 0);
+		if (fastAttacks > 0)
+		{
+			zoryaFastAttacks.put(name, fastAttacks - 1);
+			return 2;
+		}
+		return 3;
+	}
+
 	private void reset()
 	{
 		activity.clear();
 		extendedAnims.clear();
+		zoryaFastAttacks.clear();
 	}
 }
