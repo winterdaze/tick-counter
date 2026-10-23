@@ -67,12 +67,23 @@ public interface TickCounterConfig extends Config
 		return Color.CYAN;
 	}
 
+	@ConfigItem(
+		keyName = "hideOwnName",
+		name = "Hide your name",
+		description = "Show \"Your Ticks\" instead of your own name in the overlay",
+		position = 6
+	)
+	default boolean hideOwnName()
+	{
+		return false;
+	}
+
 	@Alpha
 	@ConfigItem(
 			keyName = "otherColor",
 			name = "Other players color",
 			description = "",
-			position = 6
+			position = 7
 	)
 	default Color otherColor()
 	{
@@ -83,7 +94,7 @@ public interface TickCounterConfig extends Config
 		keyName = "totalEnabled",
 		name = "Show total ticks",
 		description = "",
-		position = 7
+		position = 8
 	)
 	default boolean totalEnabled()
 	{
@@ -95,7 +106,7 @@ public interface TickCounterConfig extends Config
 		keyName = "totalColor",
 		name = "Total color",
 		description = "",
-		position = 8
+		position = 9
 	)
 	default Color totalColor()
 	{
@@ -106,7 +117,7 @@ public interface TickCounterConfig extends Config
 		keyName = "showZamorakianSpear",
 		name = "Include Zamorakian Spear",
 		description = "",
-		position = 9
+		position = 10
 	)
 	default boolean showZamorakianSpear()
 	{
@@ -119,7 +130,7 @@ public interface TickCounterConfig extends Config
 		description = "Track all players, but only display this many in the overlay.<br>" +
 			"The local player will always be included within this limit.<br>" +
 			"Set to 0 to show all players.",
-		position = 10
+		position = 11
 	)
 	default int maxPlayers()
 	{
