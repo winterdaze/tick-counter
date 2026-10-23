@@ -64,7 +64,7 @@ public class TickCounterOverlay extends OverlayPanel
 			if (maxPlayers == 0 || includedPlayers < maxPlayers || isLocalPlayer)
 			{
 				includedPlayers++;
-				LineComponent.LineComponentBuilder lineBuilder = LineComponent.builder().left(e.getKey()).right(e.getValue().toString());
+				LineComponent.LineComponentBuilder lineBuilder = LineComponent.builder().left(isLocalPlayer && config.hideOwnName() ? "Your Ticks" : e.getKey()).right(e.getValue().toString());
 
 				if (isLocalPlayer)
 				{
