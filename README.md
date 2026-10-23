@@ -12,4 +12,4 @@ Counts combat activity for nearby players
 
 If you find a weapon not counting ticks, please let us know by creating an issue
 
-**Last update:** 19/11/2024
+**Last update:** 23/10/2026
